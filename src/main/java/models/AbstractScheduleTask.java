@@ -102,4 +102,20 @@ public abstract class AbstractScheduleTask {
     public void setLastRunResult(String lastRunResult) {
         this.lastRunResult = lastRunResult;
     }
+
+    @Override
+    public String toString() {
+        return "type='" + type + '\'' +
+                ", schedulet_at='" + schedulet_at + '\'' +
+                ", execute_times=" + execute_times +
+                ", start_time=" + start_time +
+                ", end_time=" + end_time +
+                ", time_zone='" + time_zone + '\'' +
+                ", callback_url='" + callback_url + '\'' +
+                ", last_run_at=" + last_run_at +
+                ", lastRunCode=" + lastRunCode +
+                ", lastRunResult='" + lastRunResult + '\'' +
+                ", enabled=" + enabled +
+                '}';
+    }
 }

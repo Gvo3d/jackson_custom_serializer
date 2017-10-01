@@ -4,9 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import models.*;
+import support.HttpTaskRequestDeserializer;
 import support.HttpTaskRequestSerializer;
 import support.DateTimeJsonParser;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,6 +20,7 @@ public class Main {
         HttpRequestScheduleTask task = new HttpRequestScheduleTask();
         task.setId(12345678);
         task.setMethod(HttpMethod.POST);
+        task.setUrl("http://example.com/");
         Set<HttpHeaders> headers = new HashSet<>();
 
         HttpHeaders headers1 = new HttpHeaders();
@@ -67,12 +70,26 @@ public class Main {
 
         SimpleModule module = new SimpleModule();
         module.addSerializer(HttpRequestScheduleTask.class, new HttpTaskRequestSerializer());
+        module.addDeserializer(HttpRequestScheduleTask.class, new HttpTaskRequestDeserializer());
         mapper.registerModule(module);
 
+        String textTask = null;
         try {
-            System.out.println(mapper.writeValueAsString(task));
+            textTask = mapper.writeValueAsString(task);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+
+        System.out.println("SERIALIZED: "+textTask);
+        System.out.println("************************************************");
+
+        HttpRequestScheduleTask task1=null;
+        try {
+             task1 = mapper.readValue(textTask, HttpRequestScheduleTask.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(task1);
+        System.out.println("************************************************");
     }
 }

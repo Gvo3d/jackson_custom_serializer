@@ -59,4 +59,15 @@ public class HttpRequestScheduleTask extends AbstractScheduleTask {
     public void setDataType(DataType dataType) {
         this.dataType = dataType;
     }
+
+    @Override
+    public String toString() {
+        return "HttpRequestScheduleTask{" +
+                "id=" + id +
+                ", method=" + method +
+                ", url='" + url + '\'' +
+                ", headers=" + headers +
+                ", data='" + data + '\'' +
+                ", dataType=" + dataType+super.toString()+'}';
+    }
 }
